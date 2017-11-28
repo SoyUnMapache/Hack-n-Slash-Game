@@ -19,6 +19,7 @@ SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren);
 
 /**
 *Loads an image up as a surface. Generally we want to do this if we want to palette swap
+*Tiene acceso directo a los pixeles y esto nos ayuda para poder cambiar el color de la imagen
 */
 SDL_Surface* loadSurface(const std::string &file, SDL_Renderer *ren);
 /**
