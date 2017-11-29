@@ -28,8 +28,10 @@
   <ItemGroup>
     <ClInclude Include="cleanup.h" />
     <ClInclude Include="drawing_functions.h" />
+    <ClInclude Include="globals.h" />
     <ClInclude Include="randomNumber.h" />
     <ClInclude Include="res_path.h" />
+    <ClInclude Include="timeController.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

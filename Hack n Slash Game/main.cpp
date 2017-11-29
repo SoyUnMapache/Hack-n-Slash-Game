@@ -2,6 +2,7 @@
 #include "res_path.h"
 #include "drawing_functions.h"
 #include <SDL_mixer.h>
+#include "globals.h"
 #undef main
 
 int main(int __argc, char **agv)
@@ -14,7 +15,7 @@ int main(int __argc, char **agv)
 	}
 
 	//setup Window
-	SDL_Window *window = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 768, SDL_WINDOW_SHOWN);
+	SDL_Window *window = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Globals::ScreenWidth * Globals::ScreenScale, Globals::ScreenHeight * Globals::ScreenScale, SDL_WINDOW_SHOWN);
 
 	if (window == nullptr)
 	{
@@ -24,9 +25,9 @@ int main(int __argc, char **agv)
 	}
 
 	//setup renderer
-	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	Globals::renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-	if (renderer == nullptr)
+	if (Globals::renderer == nullptr)
 	{
 		cleanup(window);
 		SDL_Quit();
@@ -34,7 +35,7 @@ int main(int __argc, char **agv)
 		return 1;
 	}
 
-	SDL_RenderSetLogicalSize(renderer, 1024, 768);
+	SDL_RenderSetLogicalSize(Globals::renderer, Globals::ScreenWidth, Globals::ScreenHeight);
 
 	//Initialise SDL_image
 	if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
@@ -61,20 +62,20 @@ int main(int __argc, char **agv)
 	}
 
 	string resPath = getResourcePath();
-	SDL_Texture *texture = loadTexture(resPath + "map.png", renderer);
+	SDL_Texture *texture = loadTexture(resPath + "map.png", Globals::renderer);
 
 	//run game for 5000 ticks (5000ms)
 	while (SDL_GetTicks() < 5000)
 	{
 		//clean the screen
-		SDL_RenderClear(renderer);
+		SDL_RenderClear(Globals::renderer);
 		//draw what we want to the screen
-		renderTexture(texture, renderer, 0, 0);
+		renderTexture(texture, Globals::renderer, 0, 0);
 		//show image we've been rendering
-		SDL_RenderPresent(renderer);
+		SDL_RenderPresent(Globals::renderer);
 	}
 
-	cleanup(renderer);
+	cleanup(Globals::renderer);
 	cleanup(window);
 	cleanup(texture);
 
